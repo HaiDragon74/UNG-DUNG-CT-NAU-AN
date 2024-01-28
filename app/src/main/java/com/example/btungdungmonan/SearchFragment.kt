@@ -85,7 +85,7 @@ class SearchFragment : Fragment() {
             intent.putExtra("DATANAME",meal.strMeal)
             intent.putExtra("DATATHUMB",meal.strMealThumb)
             startActivity(intent)
-            git add  }
+        }
     }
 
     private fun autosearch() {
