@@ -9,58 +9,47 @@ import com.example.btungdungmonan.R
 import com.example.btungdungmonan.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private var trangChu= HomeFragment()
-    private var uuThich= FavorilesFragment()
-    private var danhMuc= CatevoriesFragment()
+    private var trangChu = HomeFragment()
+    private var uuThich = FavorilesFragment()
+    private var danhMuc = CatevoriesFragment()
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Bắt đầu một giao dịch Fragment với FragmentManager
-            supportFragmentManager.beginTransaction().apply {
-                // Thực hiện việc thay thế Fragment trong container (R.id.frmLayout) bằng Fragment mới (trangChu)
-                replace(R.id.frmLayout, trangChu)
-                // Áp dụng các thay đổi vào giao dịch
-                commit()
-
-
+        // BẮT ĐẦU MỘT GIAO DỊCH FRAGMENT VỚI FRAGMENTMANAGER
+        supportFragmentManager.beginTransaction().apply {
+            // THỰC HIỆN VIỆC THAY THẾ FRAGMENT TRONG CONTAINER (R.ID.FRMLAYOUT) BẰNG FRAGMENT MỚI (TRANGCHU)
+            replace(R.id.frmLayout, trangChu)
+            // ÁP DỤNG CÁC THAY ĐỔI VÀO GIAO DỊCH
+            commit()
         }
-
-
-        //xuli su kien click vao menu trong nav
-    binding.btnNav.setOnNavigationItemSelectedListener {
-        when(it.itemId)
-        {
-            R.id.trangchu ->supportFragmentManager.beginTransaction().apply {
-                replace(R.id.frmLayout,trangChu)
-                commit()
+        //XU LI SU KIEN CLICK VAO MENU TRONG NAV
+        binding.btnNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.trangchu -> supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frmLayout, trangChu)
+                    commit()
+                }
+                R.id.uuThich -> supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frmLayout, uuThich)
+                    commit()
+                }
+                R.id.danhmuc -> supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frmLayout, danhMuc)
+                    commit()
+                }
             }
-            R.id.uuThich -> supportFragmentManager.beginTransaction().apply {
-                replace(R.id.frmLayout, uuThich)
-                commit()
-            }
-            R.id.danhmuc ->supportFragmentManager.beginTransaction().apply {
-                replace(R.id.frmLayout,danhMuc)
-                commit()
-            }
+            true
         }
-        true
     }
-
-    }
-
     // NAV QUAY LAI
     override fun onBackPressed() {
         // KIEM TRA MAN FAI HOME KHONG
-        if (binding.btnNav.selectedItemId!=R.id.trangchu)
-            //NEU KHONG QUAY LAI HOME
-            binding.btnNav.selectedItemId=R.id.trangchu
+        if (binding.btnNav.selectedItemId != R.id.trangchu)
+        //NEU KHONG QUAY LAI HOME
+            binding.btnNav.selectedItemId = R.id.trangchu
         else
             super.onBackPressed()
-
-
     }
-
 }

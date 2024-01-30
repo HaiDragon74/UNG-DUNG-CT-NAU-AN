@@ -10,40 +10,34 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface Retroifitinterface {
-    // Đối tượng companion để cấu hình và tạo đối tượng API từ Retrofit
+    // ĐỐI TƯỢNG COMPANION ĐỂ CẤU HÌNH VÀ TẠO ĐỐI TƯỢNG API TỪ RETROFIT
     companion object{
-        // Khởi tạo Retrofit
+        // KHỞI TẠO RETROFIT
         val retrofit=Retrofit.Builder()
-            .baseUrl("https://www.themealdb.com/api/json/v1/1/") // Địa chỉ cơ sở của API
-            .addConverterFactory(GsonConverterFactory.create()).build() // Sử dụng Gson để chuyển đổi JSON
+            .baseUrl("https://www.themealdb.com/api/json/v1/1/") // ĐỊA CHỈ CƠ SỞ CỦA API
+            .addConverterFactory(GsonConverterFactory.create()).build() // SỬ DỤNG GSON ĐỂ CHUYỂN ĐỔI JSON
 
-        // Tạo đối tượng API từ Retrofit
+        // TẠO ĐỐI TƯỢNG API TỪ RETROFIT
         val monanApi= retrofit.create(Retroifitinterface::class.java)
 
     }
-
     //www.themealdb.com/api/json/v1/1/random.php
-    // Phương thức GET để lấy dữ liệu món ăn ngẫu nhiên từ API
+    // PHƯƠNG THỨC GET ĐỂ LẤY DỮ LIỆU MÓN ĂN NGẪU NHIÊN TỪ API
     @GET("random.php")
     fun getdatamonan():Call<MonAnall>
-
     //www.themealdb.com/api/json/v1/1/lookup.php?i=5277
-    // Phương thức GET để lấy thông tin một món ăn dựa trên ID từ API
+    // PHƯƠNG THỨC GET ĐỂ LẤY THÔNG TIN MỘT MÓN ĂN DỰA TRÊN ID TỪ API
     @GET("lookup.php?")
     fun getViewApi(@Query("i") id:String) :Call<MonAnall>
-
     //https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
     @GET("filter.php?")
     fun getfilterApi(@Query("c") name:String):Call<monan>
-
     //www.themealdb.com/api/json/v1/1/categories.php
     @GET("categories.php")
     fun getCategiriesApi():Call<docMonAn>
-
     //https://www.themealdb.com/api/json/v1/1/filter.php?c=beef
     @GET("filter.php?")    // txt va img lay theo getfilterApi
     fun getFileterItemApi(@Query("c") c:String):Call<monan>
-
     //www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
     @GET("search.php")
     fun getsearchApi(@Query("s") s :String) :Call<MonAnall>

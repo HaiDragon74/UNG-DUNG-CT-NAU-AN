@@ -18,38 +18,33 @@ import com.example.btungdungmonan.videoModel.HomeViewModelFactory
 import com.example.btungdungmonan.videoModel.MealViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-private const val MEAL_ID="param1"
+private const val MEAL_ID = "param1"
 
 class BottomMealFragment : BottomSheetDialogFragment() {
-    private var mealId:String?=null
+    private var mealId: String? = null
     private lateinit var homeVideoModel: HomeVideoModel
     private lateinit var binding: FragmentBottomMealBinding
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             mealId = it.getString(MEAL_ID)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Khởi tạo đối tượng DatabaseMeal từ lớp companion object
-        val home =DatabaseMeal.getDatabaseMeal(requireContext())
-        // Khởi tạo đối tượng HomeViewModelFactory với đối số là đối tượng DatabaseMeal
-        val homeFactory=HomeViewModelFactory(home)
-        // Sử dụng ViewModelProvider để lấy hoặc tạo mới ViewModel của lớp HomeVideoModel
-        homeVideoModel=ViewModelProvider(this,homeFactory)[HomeVideoModel::class.java]
-
-        // Inflate the layout for this fragment
-        binding= FragmentBottomMealBinding.inflate(layoutInflater, container, false)
+        // KHỞI TẠO ĐỐI TƯỢNG DATABASEMEAL TỪ LỚP COMPANION OBJECT
+        val home = DatabaseMeal.getDatabaseMeal(requireContext())
+        // KHỞI TẠO ĐỐI TƯỢNG HOMEVIEWMODELFACTORY VỚI ĐỐI SỐ LÀ ĐỐI TƯỢNG DATABASEMEAL
+        val homeFactory = HomeViewModelFactory(home)
+        // SỬ DỤNG VIEWMODELPROVIDER ĐỂ LẤY HOẶC TẠO MỚI VIEWMODEL CỦA LỚP HOMEVIDEOMODEL
+        homeVideoModel = ViewModelProvider(this, homeFactory)[HomeVideoModel::class.java]
+        // INFLATE THE LAYOUT FOR THIS FRAGMENT
+        binding = FragmentBottomMealBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-    //frament
+    //FRAMENT
     companion object {
         @JvmStatic
         fun newInstance(param1: String) =
@@ -59,47 +54,39 @@ class BottomMealFragment : BottomSheetDialogFragment() {
                 }
             }
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mealId?.let { homeVideoModel.getMealBottom(it) }
-
+        //LẤY DỮ LIỆU MEAL
         ldtBottomMeal()
-
-        //click bottom
+        //CLICK BOTTOM
         clickBottom()
-
-
         super.onViewCreated(view, savedInstanceState)
     }
-    private var getmeal:Meal?=null
+    private var getmeal: Meal? = null
     private fun ldtBottomMeal() {
-        // Sử dụng LiveData để quan sát thay đổi trong dữ liệu món ăn
-        homeVideoModel.ldtBottomMeal().observe(viewLifecycleOwner, Observer {meal->
-            // Hiển thị hình ảnh món ăn trong ImageView bằng thư viện Glide
+        // SỬ DỤNG LIVEDATA ĐỂ QUAN SÁT THAY ĐỔI TRONG DỮ LIỆU MÓN ĂN
+        homeVideoModel.ldtBottomMeal().observe(viewLifecycleOwner, Observer { meal ->
+            // HIỂN THỊ HÌNH ẢNH MÓN ĂN TRONG IMAGEVIEW BẰNG THƯ VIỆN GLIDE
             Glide.with(this).load(meal.strMealThumb).into(binding.imgbottom)
-            // Hiển thị thông tin vùng miền, tên món ăn, và danh mục của món ăn trong TextViews
-            binding.txtArea.text=meal.strArea
-            binding.txtSheetMeal.text=meal.strMeal
-            binding.txtCategory.text=meal.strCategory
-            // Lưu thông tin món ăn cho sử dụng sau này
-            getmeal=meal
-
+            // HIỂN THỊ THÔNG TIN VÙNG MIỀN, TÊN MÓN ĂN, VÀ DANH MỤC CỦA MÓN ĂN TRONG TEXTVIEWS
+            binding.txtArea.text = meal.strArea
+            binding.txtSheetMeal.text = meal.strMeal
+            binding.txtCategory.text = meal.strCategory
+            // LƯU THÔNG TIN MÓN ĂN CHO SỬ DỤNG SAU NÀY
+            getmeal = meal
         })
     }
-
-    private fun clickBottom(){
+    private fun clickBottom() {
         binding.bottom.setOnClickListener {
-            // Tạo Intent để chuyển dữ liệu sang MonanActivity
-            val intent=Intent(requireContext(),MonanActivity::class.java)
-            // Đặt dữ liệu cần chuyển theo các khóa tương ứng
-            intent.putExtra("DATAID",getmeal!!.idMeal)
-            intent.putExtra("DATANAME",getmeal!!.strArea)
-            intent.putExtra("DATATHUMB",getmeal!!.strMealThumb)
-            // Khởi chạy MonanActivity với Intent đã được cấu hình
+            // TẠO INTENT ĐỂ CHUYỂN DỮ LIỆU SANG MONANACTIVITY
+            val intent = Intent(requireContext(), MonanActivity::class.java)
+            // ĐẶT DỮ LIỆU CẦN CHUYỂN THEO CÁC KHÓA TƯƠNG ỨNG
+            intent.putExtra("DATAID", getmeal!!.idMeal)
+            intent.putExtra("DATANAME", getmeal!!.strArea)
+            intent.putExtra("DATATHUMB", getmeal!!.strMealThumb)
+            // KHỞI CHẠY MONANACTIVITY VỚI INTENT ĐÃ ĐƯỢC CẤU HÌNH
             startActivity(intent)
         }
-
-
     }
 
 }

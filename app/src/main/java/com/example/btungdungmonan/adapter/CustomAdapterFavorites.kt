@@ -10,43 +10,36 @@ import com.example.btungdungmonan.databinding.DocMonanBinding
 import com.example.btungdungmonan.databinding.DongItemBinding
 import com.example.btungdungmonan.imgmonanrandomrcl1.Meal
 
-class CustomAdapterFavorites():RecyclerView.Adapter<CustomAdapterFavorites.ViewHolder>() {
-    inner class ViewHolder(val binding: DongItemBinding):RecyclerView.ViewHolder(binding.root)
-    lateinit var clickItem:((Meal)-> Unit)
-
-
-    private var diffUtil=object : DiffUtil.ItemCallback<Meal>(){
-        // Kiểm tra xem hai mục có cùng một định danh không, thường là kiểm tra ID.
+class CustomAdapterFavorites() : RecyclerView.Adapter<CustomAdapterFavorites.ViewHolder>() {
+    inner class ViewHolder(val binding: DongItemBinding) : RecyclerView.ViewHolder(binding.root)
+    //TẠO SỰ KIỆN CLICK
+    lateinit var clickItem: ((Meal) -> Unit)
+    private var diffUtil = object : DiffUtil.ItemCallback<Meal>() {
+        // KIỂM TRA XEM HAI MỤC CÓ CÙNG MỘT ĐỊNH DANH KHÔNG, THƯỜNG LÀ KIỂM TRA ID.
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            return oldItem.idMeal==newItem.idMeal
+            return oldItem.idMeal == newItem.idMeal
         }
-
         override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            // Kiểm tra xem nội dung của hai mục có giống nhau không.
-            // Bạn có thể tùy chỉnh phần này dựa trên yêu cầu cụ thể của đối tượng Meal.
-            return oldItem==newItem
+            // KIỂM TRA XEM NỘI DUNG CỦA HAI MỤC CÓ GIỐNG NHAU KHÔNG.
+            // BẠN CÓ THỂ TÙY CHỈNH PHẦN NÀY DỰA TRÊN YÊU CẦU CỤ THỂ CỦA ĐỐI TƯỢNG MEAL.
+            return oldItem == newItem
         }
     }
-    val differ=AsyncListDiffer(this,diffUtil)
-
+    val differ = AsyncListDiffer(this, diffUtil)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view=DongItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = DongItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val meal=differ.currentList[position]
-        // Sử dụng thư viện Glide để tải hình ảnh từ đường dẫn và hiển thị vào ImageView
+        val meal = differ.currentList[position]
+        // SỬ DỤNG THƯ VIỆN GLIDE ĐỂ TẢI HÌNH ẢNH TỪ ĐƯỜNG DẪN VÀ HIỂN THỊ VÀO IMAGEVIEW
         Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.imgitem)
-        holder.binding.txtItem.text=meal.strMeal
-
-        //click item
+        holder.binding.txtItem.text = meal.strMeal
+        //CLICK ITEM
         holder.itemView.setOnClickListener {
             clickItem.invoke(meal)
         }
-
     }
-
     override fun getItemCount(): Int {
         return differ.currentList.size
     }

@@ -12,68 +12,55 @@ import com.example.btungdungmonan.imgmonan.MonAnMeal
 import com.example.btungdungmonan.videoModel.ItemDocViewModel
 
 class ItemdocActivyty : AppCompatActivity() {
-    private lateinit var nameDaTaDoc:String
+    private lateinit var nameDaTaDoc: String
     private lateinit var binding: ActivityItemdocActivytyBinding
     private lateinit var itemDocViewModel: ItemDocViewModel
-    private lateinit var itemdocAdapter:CustomitemdocAdapter
+    private lateinit var itemdocAdapter: CustomitemdocAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityItemdocActivytyBinding.inflate(layoutInflater)
+        ///LATEINIT
+        binding = ActivityItemdocActivytyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        itemDocViewModel=ViewModelProvider(this)[ItemDocViewModel::class.java]
-        itemdocAdapter=CustomitemdocAdapter()
-
-
-
-
-        // lay du lieu homactivity
+        itemDocViewModel = ViewModelProvider(this)[ItemDocViewModel::class.java]
+        itemdocAdapter = CustomitemdocAdapter()
+        // LAY DU LIEU HOMACTIVITY
         getdatahomeactibyti()
-
-
-        // lay du lieu tu api
+        // LAY DU LIEU TU API
         setApiAdapter()
-        // gan dl vao rcl
-        setrclItem()
-
-
-
-
-
-
+        // GAN DL VAO RCL
+        setrcl()
     }
 
-    private fun setrclItem() {
-        // Thiết lập RecyclerView
+    private fun setrcl() {
+        // THIẾT LẬP RECYCLERVIEW
         binding.rclitem.apply {
             // Thiết lập LayoutManager
-            layoutManager=GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
-            adapter=itemdocAdapter
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            adapter = itemdocAdapter
         }
 
     }
 
-
     private fun setApiAdapter() {
-        // Gọi phương thức getFilterItemApi() từ itemDocViewModel để lấy dữ liệu được lọc (loc theo ten)
+        // GỌI PHƯƠNG THỨC GETFILTERITEMAPI() TỪ ITEMDOCVIEWMODEL ĐỂ LẤY DỮ LIỆU ĐƯỢC LỌC (LOC THEO TEN)
         itemDocViewModel.getFilterItemApi(nameDaTaDoc)
-        // Sử dụng LiveData để quan sát sự thay đổi trong danh sách được lọc
-        itemDocViewModel.getldtFiltrItem().observe(this,Observer{it
-            // Truyền danh sách được lọc tới Adapter
+        // SỬ DỤNG LIVEDATA ĐỂ QUAN SÁT SỰ THAY ĐỔI TRONG DANH SÁCH ĐƯỢC LỌC
+        itemDocViewModel.getldtFiltrItem().observe(this, Observer {
+            it
+            // TRUYỀN DANH SÁCH ĐƯỢC LỌC TỚI ADAPTER
             itemdocAdapter.getlistItem(listitem = it as MutableList<MonAnMeal>)
-            Log.d("AAAAA","$it")
-
+            Log.d("AAAAA", "$it")
         })
     }
 
     private fun getdatahomeactibyti() {
-        // Lấy Intent từ Activity hoặc Fragment hiện tại
-        val intent=intent
-        // Lấy giá trị của "DATANAMEDOC" từ Intent và chuyển thành chuỗi, sử dụng "!!"
-        // để bảo đảm không null
-        nameDaTaDoc=intent.getStringExtra("DATANAMEDOC")!!
-        // Thiết lập văn bản cho TextView "txtitemdoc" để hiển thị thông tin làm món
-        binding.txtitemdoc.text="How make dishes $nameDaTaDoc"
-        Log.d("DATANAMEDOC","$nameDaTaDoc")
+        // LẤY INTENT TỪ ACTIVITY HOẶC FRAGMENT HIỆN TẠI
+        val intent = intent
+        // LẤY GIÁ TRỊ CỦA "DATANAMEDOC" TỪ INTENT VÀ CHUYỂN THÀNH CHUỖI, SỬ DỤNG "!!"
+        // ĐỂ BẢO ĐẢM KHÔNG NULL
+        nameDaTaDoc = intent.getStringExtra("DATANAMEDOC")!!
+        // THIẾT LẬP VĂN BẢN CHO TEXTVIEW "TXTITEMDOC" ĐỂ HIỂN THỊ THÔNG TIN LÀM MÓN
+        binding.txtitemdoc.text = "How make dishes $nameDaTaDoc"
+        Log.d("DATANAMEDOC", "$nameDaTaDoc")
     }
 }

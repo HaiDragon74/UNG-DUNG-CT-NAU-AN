@@ -25,116 +25,88 @@ import com.example.btungdungmonan.roomDatabase.DatabaseMeal
 import com.example.btungdungmonan.videoModel.HomeVideoModel
 import com.example.btungdungmonan.videoModel.HomeViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-
-
 class FavorilesFragment : Fragment() {
     private lateinit var binding: FragmentFavorilesBinding
     private lateinit var customAdapterFavorites: CustomAdapterFavorites
     private lateinit var homehvm: HomeVideoModel
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
         customAdapterFavorites = CustomAdapterFavorites()
+        //VIEWMODEL
         val home = DatabaseMeal.getDatabaseMeal(requireContext())
         val homeFactory = HomeViewModelFactory(home)
         homehvm = ViewModelProvider(this, homeFactory)[HomeVideoModel::class.java]
-
-
-        // Inflate the layout for this fragment
+        // INFLATE THE LAYOUT FOR THIS FRAGMENT
         binding = FragmentFavorilesBinding.inflate(layoutInflater, container, false)
         return binding.root
-
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        //add recyclerview
+        //ADD RECYCLERVIEW
         addRecyclerViewFavorites()
-
-        //ldtFavorites
+        //LDTFAVORITES
         ldtFavorites()
-
-        //luot phai xoa item
+        //LUOT PHAI XOA ITEM
         deleteItemFavorites()
-
-        //click item
-            clickItemRcl()
-
-
-
-
-
-
-
+        //CLICK ITEM
+        clickItemRcl()
         super.onViewCreated(view, savedInstanceState)
     }
-
+    //TRUYỀN DỮ LIỆU
     private fun clickItemRcl() {
-        customAdapterFavorites.clickItem={meal->
-            val intent=Intent(requireContext(),MonanActivity::class.java)
-            intent.putExtra("DATAID",meal.idMeal)
-            intent.putExtra("DATANAME",meal.strMeal)
-            intent.putExtra("DATATHUMB",meal.strMealThumb)
-
+        customAdapterFavorites.clickItem = { meal ->
+            val intent = Intent(requireContext(), MonanActivity::class.java)
+            intent.putExtra("DATAID", meal.idMeal)
+            intent.putExtra("DATANAME", meal.strMeal)
+            intent.putExtra("DATATHUMB", meal.strMealThumb)
             startActivity(intent)
         }
     }
-
     private fun deleteItemFavorites() {
-        // Tạo một đối tượng ItemTouchHelper để xử lý sự kiện vuốt trong RecyclerView
+        // TẠO MỘT ĐỐI TƯỢNG ITEMTOUCHHELPER ĐỂ XỬ LÝ SỰ KIỆN VUỐT TRONG RECYCLERVIEW
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-            //ctrl i
+            //CTRL I
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ) = true
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                var getmeal:Meal?=null
-                // Lấy danh sách hiện tại từ Adapter
+                var getmeal: Meal? = null
+                // LẤY DANH SÁCH HIỆN TẠI TỪ ADAPTER
                 val curentList = customAdapterFavorites.differ.currentList
-                // Lặp qua danh sách để lấy thông tin của món ăn được vuốt
+                // LẶP QUA DANH SÁCH ĐỂ LẤY THÔNG TIN CỦA MÓN ĂN ĐƯỢC VUỐT
                 curentList.forEach { meal ->
-                    getmeal=meal
+                    getmeal = meal
                 }
                 val position = viewHolder.adapterPosition
-                // Kiểm tra nếu vị trí hợp lệ trong danh sách
+                // KIỂM TRA NẾU VỊ TRÍ HỢP LỆ TRONG DANH SÁCH
                 if (position >= 0 && position < curentList.size) {
-                    // Xóa mục khỏi cơ sở dữ liệu
+                    // XÓA MỤC KHỎI CƠ SỞ DỮ LIỆU
                     homehvm.deleteDataMeal(curentList[position])
-                    // Hiển thị Snackbar để thông báo về việc xóa mục
-                    Snackbar.make(requireView(), "delete ${getmeal!!.strMeal} ", Snackbar.LENGTH_LONG)
-                        .setAction("undoed") {
-                            // Khôi phục dữ liệu đã xóa nếu người dùng bấm nút "undoed" trên Snackbar
+                    // HIỂN THỊ SNACKBAR ĐỂ THÔNG BÁO VỀ VIỆC XÓA MỤC
+                    Snackbar.make(
+                        requireView(), "delete ${getmeal!!.strMeal} ", Snackbar.LENGTH_LONG
+                    ).setAction("undoed") {
+                            // KHÔI PHỤC DỮ LIỆU ĐÃ XÓA NẾU NGƯỜI DÙNG BẤM NÚT "UNDOED" TRÊN SNACKBAR
                             homehvm.insertDataMeal(curentList[position])
-
-
                         }.show()
                 }
             }
         }
-        // Gắn ItemTouchHelper vào RecyclerView (rclFavorite) để xử lý sự kiện vuốt
+        // GẮN ITEMTOUCHHELPER VÀO RECYCLERVIEW (RCLFAVORITE) ĐỂ XỬ LÝ SỰ KIỆN VUỐT
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.rclFavorite)
     }
-
     private fun addRecyclerViewFavorites() {
         binding.rclFavorite.adapter = customAdapterFavorites
         binding.rclFavorite.layoutManager =
             GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-
     }
-
     private fun ldtFavorites() {
         homehvm.ldtFavoritesMeal().observe(viewLifecycleOwner, Observer { meal ->
-/*            meal.forEach {meal->
-                Log.d("EEEEE",meal.idMeal) //kiem tra
-            }*/
             customAdapterFavorites.differ.submitList(meal)
         })
     }

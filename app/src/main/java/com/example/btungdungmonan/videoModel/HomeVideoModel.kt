@@ -27,7 +27,7 @@ class HomeVideoModel(var databaseMeal: DatabaseMeal): ViewModel() {
 
 
     //www.themealdb.com/api/json/v1/1/random.php
-    // Hàm để lấy danh sách mục được lọc từ API
+    // HÀM ĐỂ LẤY DANH SÁCH MỤC ĐƯỢC LỌC TỪ API
     fun getrandommal() {
         //goi api
         Retroifitinterface.monanApi.getdatamonan().enqueue(object : Callback<MonAnall> {

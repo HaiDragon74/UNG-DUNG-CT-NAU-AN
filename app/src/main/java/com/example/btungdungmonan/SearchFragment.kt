@@ -27,108 +27,89 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.http.Query
-
-
 class SearchFragment : Fragment() {
     private lateinit var homeVideoModel: HomeVideoModel
     private lateinit var binding: FragmentSearchBinding
     private lateinit var customAdapterFavorites: CustomAdapterFavorites
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
-        customAdapterFavorites= CustomAdapterFavorites()
-        // Khởi tạo đối tượng DatabaseMeal từ context
-        val home=DatabaseMeal.getDatabaseMeal(requireContext())
-        // Tạo một đối tượng HomeViewModelFactory và chuyển đối tượng DatabaseMeal vào nó
-        val homeFactory=HomeViewModelFactory(home)
-        // Sử dụng ViewModelProvider để tạo hoặc lấy ViewModel từ Factory đã được cung cấp
-        homeVideoModel=ViewModelProvider(this,homeFactory)[HomeVideoModel::class.java]
-        // Inflate the layout for this fragment
-        binding=FragmentSearchBinding.inflate(layoutInflater, container, false)
+        customAdapterFavorites = CustomAdapterFavorites()
+        // KHỞI TẠO ĐỐI TƯỢNG DATABASEMEAL TỪ CONTEXT
+        val home = DatabaseMeal.getDatabaseMeal(requireContext())
+        // TẠO MỘT ĐỐI TƯỢNG HOMEVIEWMODELFACTORY VÀ CHUYỂN ĐỐI TƯỢNG DATABASEMEAL VÀO NÓ
+        val homeFactory = HomeViewModelFactory(home)
+        // SỬ DỤNG VIEWMODELPROVIDER ĐỂ TẠO HOẶC LẤY VIEWMODEL TỪ FACTORY ĐÃ ĐƯỢC CUNG CẤP
+        homeVideoModel = ViewModelProvider(this, homeFactory)[HomeVideoModel::class.java]
+        // INFLATE THE LAYOUT FOR THIS FRAGMENT
+        binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        // adapter rcl
+        // ADAPTER RCL
         Adapterrclseach()
-
-        //kiem tra trong edt co du lieu k
+        //KIEM TRA TRONG EDT CO DU LIEU K
         binding.imgNext.setOnClickListener {
             querySearch()
         }
-        //auto search
+        //AUTO SEARCH
         autosearch()
-
-        // add adapter
+        // ADD ADAPTER
         addAdapterRcl()
-        //click Rcl
+        //CLICK RCL
         ClickItemRcl()
-
         super.onViewCreated(view, savedInstanceState)
     }
-
-    // xu ly khi click vao item rcl
+    // XU LY KHI CLICK VAO ITEM RCL
     private fun ClickItemRcl() {
-        // click chuyen man hinh
-        customAdapterFavorites.clickItem={meal->
-            //truyen du lieu
-            val intent=Intent(requireContext(),MonanActivity::class.java)
-            intent.putExtra("DATAID",meal.idMeal)
-            intent.putExtra("DATANAME",meal.strMeal)
-            intent.putExtra("DATATHUMB",meal.strMealThumb)
+        // CLICK CHUYEN MAN HINH
+        customAdapterFavorites.clickItem = { meal ->
+            //TRUYEN DU LIEU
+            val intent = Intent(requireContext(), MonanActivity::class.java)
+            intent.putExtra("DATAID", meal.idMeal)
+            intent.putExtra("DATANAME", meal.strMeal)
+            intent.putExtra("DATATHUMB", meal.strMealThumb)
             startActivity(intent)
         }
     }
-
     private fun autosearch() {
-        var autosearch:Job?=null
-        binding.extSearch.addTextChangedListener {search->
-            // Hủy job trước nếu nó đang chạy
+        var autosearch: Job? = null
+        binding.extSearch.addTextChangedListener { search ->
+            // HỦY JOB TRƯỚC NẾU NÓ ĐANG CHẠY
             autosearch?.cancel()
-            // Khởi tạo một job mới bằng cách sử dụng lifecycleScope
-            autosearch =lifecycleScope.launch {
+            // KHỞI TẠO MỘT JOB MỚI BẰNG CÁCH SỬ DỤNG LIFECYCLESCOPE
+            autosearch = lifecycleScope.launch {
                 delay(500)
-                // Gọi hàm trong homeVideoModel để lấy dữ liệu từ API với tham số là chuỗi tìm kiếm
+                // GỌI HÀM TRONG HOMEVIDEOMODEL ĐỂ LẤY DỮ LIỆU TỪ API VỚI THAM SỐ LÀ CHUỖI TÌM KIẾM
                 homeVideoModel.getsearchMealApi(search.toString())
             }
         }
-
     }
-
     private fun addAdapterRcl() {
-        // Sử dụng LiveData để quan sát dữ liệu từ homeVideoModel.ldtsearchMeal()
-        homeVideoModel.ldtsearchMeal().observe(viewLifecycleOwner, Observer {meal->
-            // Khi dữ liệu thay đổi, gửi nó vào Adapter để cập nhật RecyclerView
+        // SỬ DỤNG LIVEDATA ĐỂ QUAN SÁT DỮ LIỆU TỪ HOMEVIDEOMODEL.LDTSEARCHMEAL()
+        homeVideoModel.ldtsearchMeal().observe(viewLifecycleOwner, Observer { meal ->
+            // KHI DỮ LIỆU THAY ĐỔI, GỬI NÓ VÀO ADAPTER ĐỂ CẬP NHẬT RECYCLERVIEW
             customAdapterFavorites.differ.submitList(meal)
         })
     }
-
     private fun querySearch() {
-        val querySearch=binding.extSearch.text.toString()
-        // Kiểm tra xem trường nhập liệu có giá trị không rỗng
-        if (querySearch.isNotEmpty())
-        {
-            // Nếu có giá trị, gọi hàm trong homeVideoModel để thực hiện tìm kiếm dựa trên truy vấn
+        val querySearch = binding.extSearch.text.toString()
+        // KIỂM TRA XEM TRƯỜNG NHẬP LIỆU CÓ GIÁ TRỊ KHÔNG RỖNG
+        if (querySearch.isNotEmpty()) {
+            // NẾU CÓ GIÁ TRỊ, GỌI HÀM TRONG HOMEVIDEOMODEL ĐỂ THỰC HIỆN TÌM KIẾM DỰA TRÊN TRUY VẤN
             homeVideoModel.getsearchMealApi(querySearch)
         }
-        Log.d("querySearch","LOI")
+        Log.d("querySearch", "LOI")
     }
-
     private fun Adapterrclseach() {
-        // Ánh xạ RecyclerView từ layout
+        // ÁNH XẠ RECYCLERVIEW TỪ LAYOUT
         binding.rclSeach.apply {
-            // Cấu hình LayoutManager cho RecyclerView - ở đây sử dụng GridLayoutManager với 2 cột
-            layoutManager=GridLayoutManager(requireContext(),2,GridLayoutManager.VERTICAL,false)
-            // Thiết lập Adapter cho RecyclerView - customAdapterFavorites là một Adapter đã được khởi tạo trước đó
-            adapter=customAdapterFavorites
+            // CẤU HÌNH LAYOUTMANAGER CHO RECYCLERVIEW - Ở ĐÂY SỬ DỤNG GRIDLAYOUTMANAGER VỚI 2 CỘT
+            layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            // THIẾT LẬP ADAPTER CHO RECYCLERVIEW - CUSTOMADAPTERFAVORITES LÀ MỘT ADAPTER ĐÃ ĐƯỢC KHỞI TẠO TRƯỚC ĐÓ
+            adapter = customAdapterFavorites
         }
     }
 }
+

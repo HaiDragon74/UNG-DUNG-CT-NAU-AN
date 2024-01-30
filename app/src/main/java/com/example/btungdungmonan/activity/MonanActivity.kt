@@ -27,88 +27,76 @@ class MonanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMonanBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //VIEWMODEL
         val mealDatabase= DatabaseMeal.getDatabaseMeal(this)
         val mealViewModelFactory= MealViewModelFactory(mealDatabase)
         monanModel= ViewModelProvider(this,mealViewModelFactory)[MonanViewModel::class.java]
-
-        getdatamonan()  // chuyen activity truyen du lieu
-
-        setdatamonan()  // set img homfracmnt
-        loadinglpi()   // hien load
-
+        //TRUYEN DU LIEU
+        datamonan()
+        //SET IMG
+        setdatamonan()
+        // HIEN LOAD
+        loadinglpi()
+        //LAY DU LIEU MEAL
         monanModel.getlivedata(monanId)
-        monanLiveDaTa()     // set img txt MonanActivity
-
-        // imgyoutobe
+        monanLiveDaTa()
+        // IMGYOUTOBE
         youtobeclick()
-
-
-        //click trai tim luu mon an lai
+        //CLICK TRAI TIM LUU MON AN LAI
         clickFavorite()
-
-
-
-
     }
-
     private fun clickFavorite() {
         binding.fabtntim.setOnClickListener {
-            // Thực hiện việc chèn dữ liệu vào cơ sở dữ liệu thông qua monanModel
+                // THỰC HIỆN VIỆC CHÈN DỮ LIỆU VÀO CƠ SỞ DỮ LIỆU THÔNG QUA MONANMODEL
                 monanModel.insertDataMeal(saveMeal!!)
                 Toast.makeText(this,"add ${saveMeal!!.strMeal} to favorites successfully",Toast.LENGTH_SHORT).show()
-
-
         }
     }
-
     private fun youtobeclick() {
         binding.imgyoutobe.setOnClickListener {
-            // Tạo một Intent để mở một trình duyệt web và chuyển đến đường dẫn YouTube (youtobeclick)
+            // TẠO MỘT INTENT ĐỂ MỞ MỘT TRÌNH DUYỆT WEB VÀ CHUYỂN ĐẾN ĐƯỜNG DẪN YOUTUBE (YOUTOBECLICK)
             val intent=Intent(Intent.ACTION_VIEW, Uri.parse(youtobeclick))
             startActivity(intent)
         }
     }
-    private var saveMeal:Meal?=null // lay ra luu
+    private var saveMeal:Meal?=null // LAY RA LUU
     private fun monanLiveDaTa() {
-        // Sử dụng LiveData để quan sát sự thay đổi trong dữ liệu từ monanModel
+        // SỬ DỤNG LIVEDATA ĐỂ QUAN SÁT SỰ THAY ĐỔI TRONG DỮ LIỆU TỪ MONANMODEL
         monanModel.obslivedata().observe(this
         ) { value ->
-            saveMeal = value  // lay ra luu
-            // Gọi hàm offloadinglpi() để thực hiện các xử lý liên quan đến hiển thị
+            saveMeal = value  // LAY RA LUU
+            // GỌI HÀM OFFLOADINGLPI() ĐỂ THỰC HIỆN CÁC XỬ LÝ LIÊN QUAN ĐẾN HIỂN THỊ
             offloadinglpi()
-            // Cập nhật các TextViews để hiển thị thông tin món ăn
+            // CẬP NHẬT CÁC TEXTVIEWS ĐỂ HIỂN THỊ THÔNG TIN MÓN ĂN
             binding.txtthit.text = "Category ${value.strCategory}"
             binding.txtkhuvuc.text = "Area ${value.strArea}"
             binding.txthuongdan.text = value.strInstructions
-            // Lưu đường dẫn YouTube vào biến youtobeclick
+            // LƯU ĐƯỜNG DẪN YOUTUBE VÀO BIẾN YOUTOBECLICK
             youtobeclick = value.strYoutube
         }
     }
-
     private fun setdatamonan() {
-        // Sử dụng thư viện Glide để tải hình ảnh vào ImageView
+        // SỬ DỤNG THƯ VIỆN GLIDE ĐỂ TẢI HÌNH ẢNH VÀO IMAGEVIEW
         Glide.with(applicationContext)
-            .load(monanThumb) // Đường dẫn của hình ảnh
-            .into(binding.imgtollbar)// ImageView để hiển thị hình ảnh
+            .load(monanThumb) // ĐƯỜNG DẪN CỦA HÌNH ẢNH
+            .into(binding.imgtollbar)// IMAGEVIEW ĐỂ HIỂN THỊ HÌNH ẢNH
 
-        // Cập nhật tiêu đề của CollapsingToolbarLayout
+        // CẬP NHẬT TIÊU ĐỀ CỦA COLLAPSINGTOOLBARLAYOUT
         binding.ctollbar.title=monanName
-        // Đặt màu cho tiêu đề mở rộng của CollapsingToolbarLayout
+        // ĐẶT MÀU CHO TIÊU ĐỀ MỞ RỘNG CỦA COLLAPSINGTOOLBARLAYOUT
         binding.ctollbar.setExpandedTitleColor(resources.getColor(R.color.white))
     }
-
-    private fun getdatamonan() {
-        // Lấy Intent từ Activity hoặc Fragment hiện tại
+    private fun datamonan() {
+        // LẤY INTENT TỪ ACTIVITY HOẶC FRAGMENT HIỆN TẠI
         val intent=intent
         monanId= intent.getStringExtra("DATAID").toString()
         monanName=intent.getStringExtra("DATANAME")!!
         monanThumb=intent.getStringExtra("DATATHUMB")!!
     }
     private fun loadinglpi(){
-        // Hiển thị LoadingProgressBar
+        // HIỂN THỊ LOADINGPROGRESSBAR
         binding.lpiload.visibility=View.VISIBLE
-        // Ẩn FloatingActionButton
+        // ẨN FLOATINGACTIONBUTTON
         binding.fabtntim.visibility=View.INVISIBLE
         binding.txtthit.visibility=View.INVISIBLE
         binding.txtkhuvuc.visibility=View.INVISIBLE

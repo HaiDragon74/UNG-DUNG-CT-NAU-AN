@@ -14,23 +14,22 @@ import com.example.btungdungmonan.videoModel.HomeVideoModel
 @Database(entities = [Meal::class], version = 1, exportSchema = false)
 @TypeConverters(MealTypeCoverter::class)
 abstract class DatabaseMeal:RoomDatabase() {
-
-    // Hàm trừu tượng để nhận DAO (Data Access Object) cho các đối tượng Meal
+    // HÀM TRỪU TƯỢNG ĐỂ NHẬN DAO (DATA ACCESS OBJECT) CHO CÁC ĐỐI TƯỢNG MEAL
    abstract  fun mealDao():MealDao
-    // Đối tượng companion để khai báo một phiên bản duy nhất của DatabaseMeal
+    // ĐỐI TƯỢNG COMPANION ĐỂ KHAI BÁO MỘT PHIÊN BẢN DUY NHẤT CỦA DATABASEMEAL
     companion object{
-        // @Volatile: Đảm bảo rằng giá trị của INSTANCE luôn được cập nhật
+        // @VOLATILE: ĐẢM BẢO RẰNG GIÁ TRỊ CỦA INSTANCE LUÔN ĐƯỢC CẬP NHẬT
         @Volatile
         private var INSTANCE:DatabaseMeal? =null
-        // Phương thức để lấy hoặc tạo ra một đối tượng DatabaseMeal
+        // PHƯƠNG THỨC ĐỂ LẤY HOẶC TẠO RA MỘT ĐỐI TƯỢNG DATABASEMEAL
         fun getDatabaseMeal(context: Context):DatabaseMeal{
             val datainstance= INSTANCE
-            // Kiểm tra xem đã có một phiên bản của DatabaseMeal chưa
+            // KIỂM TRA XEM ĐÃ CÓ MỘT PHIÊN BẢN CỦA DATABASEMEAL CHƯA
             if (datainstance!=null)
                 return datainstance
-            // Nếu không có, tạo một đối tượng mới và gán cho INSTANCE
+            // NẾU KHÔNG CÓ, TẠO MỘT ĐỐI TƯỢNG MỚI VÀ GÁN CHO INSTANCE
             synchronized(this){
-                // Tạo một đối tượng cơ sở dữ liệu Room với tên là "BANG_MONAN"
+                // TẠO MỘT ĐỐI TƯỢNG CƠ SỞ DỮ LIỆU ROOM VỚI TÊN LÀ "BANG_MONAN"
                 val newInstance=Room.databaseBuilder(
                     context.applicationContext,
                     DatabaseMeal::class.java,
@@ -39,10 +38,6 @@ abstract class DatabaseMeal:RoomDatabase() {
                 INSTANCE=newInstance
                 return newInstance
             }
-
         }
-
-
-
     }
 }

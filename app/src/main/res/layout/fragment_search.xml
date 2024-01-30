@@ -15,19 +15,19 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:padding="5dp"
             android:singleLine="true"
-            android:hint="search on the app"
+            android:hint="Search on the app"
             android:background="@drawable/search"
             android:layout_weight="1"
             android:id="@+id/extSearch"
             android:textSize="20dp" />
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/imgNext"
-            android:src="@drawable/next"/>
+            android:src="@drawable/timkiem"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

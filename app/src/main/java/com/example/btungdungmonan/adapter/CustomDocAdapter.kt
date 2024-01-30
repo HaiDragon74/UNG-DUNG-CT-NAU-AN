@@ -7,48 +7,34 @@ import com.example.btungdungmonan.databinding.DocMonanBinding
 import com.example.btungdungmonan.imgmonanrcl2kcop.docMeal
 
 class CustomDocAdapter():RecyclerView.Adapter<CustomDocAdapter.ViewHolder>() {
+    //TẠO SỰ KIỆNCLICK
     lateinit var clickDocMonAn:((docMeal) -> Unit)
-
-
+    // CHUYỂN SANG MUTABLLIST
     private var docMonAn:MutableList<docMeal> = mutableListOf()
     fun setDocMonAn(docMonAn: MutableList<docMeal>){
-        // Gán danh sách mới được truyền vào cho thuộc tính docMonAn của lớp
+        // GÁN DANH SÁCH MỚI ĐƯỢC TRUYỀN VÀO CHO THUỘC TÍNH DOCMONAN CỦA LỚP
         this.docMonAn=docMonAn
-        // Thông báo cho Adapter rằng dữ liệu đã thay đổi, cần cập nhật giao diện
+        // THÔNG BÁO CHO ADAPTER RẰNG DỮ LIỆU ĐÃ THAY ĐỔI, CẦN CẬP NHẬT GIAO DIỆN
         notifyDataSetChanged()
     }
-    fun setcatevories(meal:List<docMeal>){
-
-    }
-
     class ViewHolder(var binding: DocMonanBinding):RecyclerView.ViewHolder(binding.root) {
-
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view= DocMonanBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(view)
     }
-
     override fun getItemCount(): Int {
         return docMonAn.size
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Sử dụng thư viện Glide để tải hình ảnh từ đường dẫn và hiển thị vào ImageView
+        // SỬ DỤNG THƯ VIỆN GLIDE ĐỂ TẢI HÌNH ẢNH TỪ ĐƯỜNG DẪN VÀ HIỂN THỊ VÀO IMAGEVIEW
         Glide.with(holder.itemView)
             .load(docMonAn[position].strCategoryThumb)
             .into(holder.binding.imgdocmonan)
         holder.binding.txtdocten.text=docMonAn[position].strCategory
-
-        //click vao item
+        //CLICK VAO ITEM
         holder.itemView.setOnClickListener {
             clickDocMonAn.invoke(docMonAn[position])
         }
-/*        holder.itemView.setOnClickListener {
-            clickitm.onclick(docMonAn[position])
-        }*/
-
-
     }
 }

@@ -5,23 +5,21 @@ import androidx.room.TypeConverters
 
 @TypeConverters
  class MealTypeCoverter {
-
-    // chuyen di kieu du lieu
-
+    // CHUYEN DI KIEU DU LIEU
     @TypeConverter
     fun fromAnytoString(data:Any?):String{
-        // Kiểm tra xem data có null không
+        // KIỂM TRA XEM DATA CÓ NULL KHÔNG
         if (data==null)
             return ""
-        // Ép kiểu data thành String
+        // ÉP KIỂU DATA THÀNH STRING
         return data as String
     }
     @TypeConverter
     fun fromStringtoAny(data:String?):Any{
-        // Kiểm tra xem data có null không
+        // KIỂM TRA XEM DATA CÓ NULL KHÔNG
         if (data==null)
             return ""
-        // tra ve kieu data String
+        // TRA VE KIEU DATA STRING
         return data
     }
 }
