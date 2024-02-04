@@ -34,7 +34,7 @@
                     android:textSize="20sp"
                     android:layout_alignBottom="@id/imgSeafood"
                     android:textStyle="bold"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/black" />
         </LinearLayout>
     <!--app:riv_corner_radius="20dp" bo cạnh-->
 
