@@ -4,30 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="10dp"
-    tools:context=".SearchFragment">
+    android:id="@+id/em"
+    tools:context=".frament.SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/framentLayoutHome"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/search"
+        android:gravity="center"
         android:orientation="horizontal">
-
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="45dp"
+            android:id="@+id/imgBlack"
+            android:backgroundTint="#DCB8B8"
+            android:layout_gravity="center"
+            android:src="@drawable/black"/>
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:padding="5dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textColorHint="#AE8E8E"
             android:singleLine="true"
-            android:hint="Search on the app"
-            android:background="@drawable/search"
+            android:textColor="@color/black"
+            android:hint="Search food"
             android:layout_weight="1"
-            android:id="@+id/extSearch"
+            android:id="@+id/edtSearch"
             android:textSize="20dp" />
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/imgNext"
-            android:src="@drawable/timkiem"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

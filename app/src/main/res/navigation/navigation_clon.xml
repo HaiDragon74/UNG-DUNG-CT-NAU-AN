@@ -27,13 +27,17 @@
         tools:layout="@layout/fragment_catevories" />
     <dialog
         android:id="@+id/bottomMealFragment"
-        android:name="com.example.btungdungmonan.BottomMealFragment"
+        android:name="com.example.btungdungmonan.frament.BottomSearchFragment"
         android:label="fragment_bottom_meal"
         tools:layout="@layout/fragment_bottom_meal" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.btungdungmonan.SearchFragment"
+        android:name="com.example.btungdungmonan.frament.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
     </fragment>
+    <fragment
+        android:id="@+id/beefFragment"
+        android:name="com.example.btungdungmonan.tablayout.tablayoutfrafment.BeefFragment"
+        android:label="BeefFragment" />
 </navigation>

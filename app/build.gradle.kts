@@ -56,6 +56,7 @@ dependencies {
     //Glide
     implementation("com.github.bumptech.glide:glide:4.12.0") // them
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0") // them
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
     //videomodel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
@@ -69,6 +70,13 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     //Snackbar
     implementation ("com.google.android.material:material:1.5.0")
+    //bo img
+    implementation ("com.makeramen:roundedimageview:2.3.0")
+    //COLOR IMG
+    implementation ("com.github.skydoves:colorpickerview:2.3.0")
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    //keo xuong reset
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 
 

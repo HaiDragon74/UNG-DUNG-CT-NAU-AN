@@ -3,121 +3,184 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/timkiem"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".fragment.HomeFragment">
 
+
     <!-- TODO: Update blank fragment layout -->
 
+
+    <!-- Toolbar -->
+
+
     <FrameLayout
-        android:id="@+id/fragmentlayout"
+        android:id="@+id/fragmentlayoutSearch"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/srlReset"
+        android:layout_height="wrap_content">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbarThumbVertical="@android:color/darker_gray">
 
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:scrollbarThumbVertical="@android:color/darker_gray"
             android:layout_height="wrap_content"
-            android:fillViewport="true">
-
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/linearLayoutSearch"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="20sp"
+                android:background="@drawable/search"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/search_ic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:hint="Search food"
+                    android:textColorHint="#AE8E8E"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/probarImgRanDom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Loading..."
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dataRanDom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20sp"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="20dp"
+                    android:text="What would you like to eat ?"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/imgRanDomMeal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius="30dp" />
+
+                    <TextView
+                        android:id="@+id/imgNameRanDom"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
-                        android:text="HOME"
-                        android:textColor="#CF1818"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imgNameRanDom"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Random food"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+                </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:id="@+id/imgSearchHome"
-                        android:src="@drawable/timkiem" />
-
-                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/black"
-                    android:text="What would you like to eat"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:layout_margin="20dp"
-                    app:cardCornerRadius="30dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/imgmonan"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/load" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Popular dishes"
+                    android:text="Seafoof"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rclphobien"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:textColor="@color/black"
-                    android:scrollbars="none" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Great food"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rclParentChild"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rclMonan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:padding="20dp"
-                    android:scrollbars="vertical" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Great food"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
+                app:tabMode="scrollable"
+                app:tabTextColor="@color/black" />
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:saveEnabled="false" />
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

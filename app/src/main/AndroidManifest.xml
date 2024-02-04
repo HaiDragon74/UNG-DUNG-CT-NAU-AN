@@ -16,10 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ItemdocActivyty"
+            android:name=".activity.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MonanActivity"
+            android:name=".activity.InstructionActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"

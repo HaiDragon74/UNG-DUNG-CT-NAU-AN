@@ -1,0 +1,14 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#2A7468" /> //MÀU NỀN KHI CHƯA CLICK VÀO ITEM RCL
+            <corners android:radius="8dp" /> <!-- điều chỉnh độ cong của góc nếu cần -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#DFD3D3" /> // MÀU NỀN KHI CLICK VÀO ITEM RCL
+            <corners android:radius="8dp" /> <!-- Điều chỉnh độ cong của góc nếu cần -->
+        </shape>
+    </item>
+</selector>

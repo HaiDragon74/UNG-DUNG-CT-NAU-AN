@@ -6,7 +6,7 @@
     android:id="@+id/bottom"
     android:background="@drawable/bo"
     android:layout_height="match_parent"
-    tools:context=".BottomMealFragment">
+    tools:context=".frament.BottomSearchFragment">
 
 
     <ImageView
@@ -28,12 +28,12 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginTop="3dp"
-                android:src="@drawable/map"/>
+                android:src="@drawable/ic_map"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="vi tri"
-                android:id="@+id/txtArea"/>
+                android:id="@+id/tvArea"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:text="Meal name"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:id="@+id/txtSheetMeal"/>
+            android:id="@+id/tvMeal"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,12 +58,12 @@
             android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:layout_marginTop="3dp"
-            android:src="@drawable/thit" />
+            android:src="@drawable/ic_meal" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="vi tri"
-            android:id="@+id/txtCategory"/>
+            android:id="@+id/tvCategory"/>
 
 
 
